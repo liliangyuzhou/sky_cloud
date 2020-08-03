@@ -68,12 +68,12 @@
                 // window.location='/'
                 this.$message.success("登录成功!")
               } else {
-                return this.$message.error("登录失败!")
+                return this.$message.error(data.message)
 
               }
             })
           } else {
-            return this.$message.error("输入参数不正确")
+            return this.$message.error("请输入正确的用户名和密码！")
           }
         });
 
