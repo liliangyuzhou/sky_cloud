@@ -1,19 +1,20 @@
 
 import {common_get,common_post,common_put} from "./common";
 
+const url="backend/user/";
 
 export const register=function (name,pwd) {
-  return common_post("backend/user/",{"username":name,"password":pwd})
+  return common_post(url,{"username":name,"password":pwd})
 
 }
 
 export const login=function (name,pwd) {
-  return common_put("backend/user/", {"username":name,"password":pwd})
+  return common_put(url, {"username":name,"password":pwd})
 }
 
 
 export const get_user=function () {
-  return common_get("backend/user/")
+  return common_get(url)
 
 }
 
