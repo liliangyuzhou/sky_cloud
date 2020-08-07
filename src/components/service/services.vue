@@ -106,7 +106,6 @@
         this.$refs.edit_service.validate((valid) => {
           if(valid){
             this.add_service_req();
-
           }
 
         });
@@ -124,6 +123,7 @@
         this.edit_service.id=-1;
       },
       add_chlidren_service(parent_data){
+        //和父服务很像，除了id和name不一样，所以这里重新给这两个字段赋值就好
         this.add_root_service();
         this.edit_service.parent=parent_data.id;
         this.edit_service.parent_name=parent_data.name;
