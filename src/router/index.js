@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import index from '../components/index';
 import HelloWorld from "@/components/HelloWorld1";
 import login from "../components/login";
+import service from "../components/service/services";
 
 
 Vue.use(Router)
@@ -13,8 +14,14 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'default',
+      redirect:'/index/1'
+    },
+    {
+      path: '/index/:tab',
       name: 'index',
-      component: index
+      component: index,
+      props:true, //必须要写的，才可以外部tab进组件index中去
     },
     {
       path: '/test',
@@ -25,6 +32,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: login
+    },
+    {
+      path: '/service',
+      name: 'service',
+      component: service
     },
   ]
 })
