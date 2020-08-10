@@ -18,13 +18,15 @@
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item icon="el-icon-circle-plus" :command="{'ops':'add','data':data}">创建</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-circle-plus" :command="{'ops':'edit','data':data}">编辑</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-circle-plus" :command="{'ops':'delete','data':data}">删除</el-dropdown-item>
+              <el-dropdown-item icon="el-icon-edit-outline" :command="{'ops':'edit','data':data}">编辑</el-dropdown-item>
+              <el-dropdown-item icon="el-icon-delete" :command="{'ops':'delete','data':data}">删除</el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
       </span>
       </el-tree>
     </div>
+
+
     <div class="interface-tree">
       列表内容
     </div>
@@ -46,6 +48,8 @@
         <el-button type="primary" @click="submit_form">确 定</el-button>
       </div>
     </el-dialog>
+
+
 
   </div>
 
@@ -105,7 +109,12 @@
       submit_form(){
         this.$refs.edit_service.validate((valid) => {
           if(valid){
-            this.add_service_req();
+            if (this.edit_service.mode==="add"){
+              this.add_service_req();
+            }else{
+              this.update_service_req();
+            }
+
           }
 
         });
@@ -127,12 +136,25 @@
         this.add_root_service();
         this.edit_service.parent=parent_data.id;
         this.edit_service.parent_name=parent_data.name;
+      },
 
-
+     edit_root_service(data){
+        this.edit_service.dialog_Visible=true;
+        this.edit_service.mode="edit";
+        this.edit_service.name=data.name;
+        this.edit_service.description=data.description;
+        this.edit_service.title="编辑服务";
+        this.edit_service.parent=data.parent;
+        this.edit_service.parent_name=data.parent;
+        this.edit_service.id=data.id;
       },
 
       delete_children_service(service_id){
-        delete_service(service_id).then(data=>{
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => { delete_service(service_id).then(data=>{
           if(data.success===true){
             this.$message.success("删除服务成功!");
             this.get_service_func()
@@ -140,7 +162,14 @@
           }else{
             return this.$message.error("data.message")
           }
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
         });
+
       },
 
 
@@ -148,6 +177,18 @@
         create_service(this.edit_service.name,this.edit_service.description,this.edit_service.parent).then(resp=>{
           if(resp.success===true){
             this.$message.success("创建服务成功!");
+            this.edit_service.dialog_Visible=false;
+            this.get_service_func();
+          }else{
+            return this.$message.error("resp.message")
+          }
+        });
+      },
+
+      update_service_req(){
+        update_service(this.edit_service.id,this.edit_service.name,this.edit_service.description,this.edit_service.parent).then(resp=>{
+          if(resp.success===true){
+            this.$message.success("编辑服务成功!");
             this.edit_service.dialog_Visible=false;
             this.get_service_func();
           }else{
@@ -165,14 +206,17 @@
               this.get_service_func();
               break;
             case "delete":
-              this.delete_children_service(data.id)
+              this.delete_children_service(data.id);
               break;
             case "edit":
+              this.edit_root_service(data);
+              this.get_service_func();
               break;
 
 
         }
-      }
+      },
+
 
     },
 
