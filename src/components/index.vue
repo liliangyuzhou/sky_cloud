@@ -58,7 +58,7 @@
     methods: {
 
       handle_select: function (index, index_path) {
-        this.$router.push('/index/'+index)
+        this.$router.push('/index/'+index).catch(err=>err)
 
 
       }

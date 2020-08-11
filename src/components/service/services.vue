@@ -3,6 +3,8 @@
     <div class="service-tree">
       <el-button type="primary" @click="add_root_service" size="small">创建根服务</el-button>
       <el-tree
+        draggable
+        @node-drop="drop_service"
         :props="default_Props"
         class="tree-padding"
         :data="service_tree"
@@ -145,7 +147,7 @@
         this.edit_service.description=data.description;
         this.edit_service.title="编辑服务";
         this.edit_service.parent=data.parent;
-        this.edit_service.parent_name=data.parent;
+        this.edit_service.parent_name=data.parent_name;
         this.edit_service.id=data.id;
       },
 
@@ -215,6 +217,21 @@
 
 
         }
+      },
+
+      //树状结构的拖拽功能
+
+      drop_service(node1,node2,postion ,event){
+        this.init_drop_service(node1.data,node2.data)
+        this.update_service_req()
+
+    },
+      init_drop_service(data1,data2){
+
+        this.edit_service.parent=data2.id;
+        this.edit_service.id=data1.id;
+        this.edit_service.name=data1.name;
+        this.edit_service.description=data1.description;
       },
 
 
