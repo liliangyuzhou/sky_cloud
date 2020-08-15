@@ -4,7 +4,7 @@ import index from '../components/index';
 import HelloWorld from "@/components/HelloWorld1";
 import login from "../components/login";
 import service from "../components/service/services";
-
+import interfaces from "../components/interface/interface";
 
 Vue.use(Router)
 
@@ -37,6 +37,12 @@ export default new Router({
       path: '/service',
       name: 'service',
       component: service
+    },
+    {
+      path: '/add/interface',
+      name: 'interface',
+      component: interfaces,
+      props: true,
     },
   ]
 })

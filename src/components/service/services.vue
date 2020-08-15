@@ -59,9 +59,10 @@
 
 <script>
   import {create_service,update_service,delete_service,get_service_tree,get_service} from "../../requests/service";
-
+  import interfaces from "../interface/interface";
   export default {
     name: "services",
+    props:{interfaces},
     data() {
       return {
         service_tree: [],
