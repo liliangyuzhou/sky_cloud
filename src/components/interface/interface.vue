@@ -356,6 +356,7 @@
                 create_interface(data).then(data => {
                   if (data.success === true) {
                     this.$message.info("接口创建成功！")
+                    this.$router.push("/index/1")
 
                   } else {
                     this.$message.error("接口创建失败，请检查输入的参数！")
@@ -372,6 +373,7 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
+        this.$router.push("/index/1")
       },
       get_interface_detail() {
         get_interface(Number(this.ruleForm.interface_id)).then(data => {

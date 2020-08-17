@@ -5,6 +5,7 @@
       <el-tree
         draggable
         @node-drop="drop_service"
+        @node-click="select_service"
         :props="default_Props"
         class="tree-padding"
         :data="service_tree"
@@ -30,7 +31,7 @@
 
 
     <div class="interface-tree">
-      列表内容
+      <interface_list @update="update_service_interface" :interfaces="service_interfaces" :service_id="service_id"></interface_list>
     </div>
 
     <el-dialog :title="edit_service.title" :visible.sync="edit_service.dialog_Visible" width="35%">
@@ -58,11 +59,13 @@
 </template>
 
 <script>
-  import {create_service,update_service,delete_service,get_service_tree,get_service} from "../../requests/service";
-  import interfaces from "../interface/interface";
+  import {create_service,update_service,delete_service,get_service_tree,get_service,get_service_interface} from "../../requests/service";
+  // import interfaces from "../interface/interface";
+  import interface_list from "../interface/interface_list";
   export default {
     name: "services",
-    props:{interfaces},
+    // props:{interfaces},
+    components:{interface_list},
     data() {
       return {
         service_tree: [],
@@ -93,12 +96,18 @@
           description: [
             {required: false, message: '请输入描述', trigger: 'blur'},
           ],
-        }
+        },
+        service_interfaces:[],
+        service_id:1,
 
       }
     },
 
     methods:{
+      //更新事件，update是子组件interface_list监听父组件的一个方法，每当子组件监听的这个update属性发生变化，父组件会捕捉这个事件来进行相应的操作
+      update_service_interface(){
+        this.get_interfaces_func()
+      },
       get_service_func() {
         get_service_tree().then(data=>{
           if (data.success===true){
@@ -234,6 +243,18 @@
         this.edit_service.name=data1.name;
         this.edit_service.description=data1.description;
       },
+      select_service(data){
+        this.service_id=data.id
+        this.get_interfaces_func()
+      },
+      get_interfaces_func(){
+        get_service_interface(this.service_id).then(data=>{
+          if(data.success===true){
+            this.service_interfaces=data.data
+          }
+        })
+
+      }
 
 
     },

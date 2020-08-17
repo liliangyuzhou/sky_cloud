@@ -5,6 +5,7 @@ import HelloWorld from "@/components/HelloWorld1";
 import login from "../components/login";
 import service from "../components/service/services";
 import interfaces from "../components/interface/interface";
+import interface_list from "../components/interface/interface_list";
 
 Vue.use(Router)
 
@@ -44,5 +45,18 @@ export default new Router({
       component: interfaces,
       props: true,
     },
+    {
+      path: '/edit/interface',
+      name: 'interface',
+      component: interfaces,
+      props: true,
+    },
+
+    // {
+    //   path: '/interface/list',
+    //   name: 'interface_list',
+    //   component:interface_list,
+    //   props: true,
+    // },
   ]
 })
