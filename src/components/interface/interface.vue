@@ -346,6 +346,7 @@
                 update_interface(data,Number(this.ruleForm.interface_id)).then(data=>{
                   if (data.success === true) {
                     this.$message.info("接口更新成功！")
+                    this.$router.push("/index/1")
 
                   } else {
                     this.$message.error("接口更新失败！")

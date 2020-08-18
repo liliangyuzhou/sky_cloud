@@ -35,7 +35,8 @@
     </el-menu>
 
     <div class="index-context">
-      <services></services>
+      <services v-if="tab === '1'"></services>
+      <debug_interface v-if="tab === '4'"></debug_interface>
     </div>
   </div>
 </template>
@@ -43,11 +44,12 @@
 <script>
   import {get_user} from "../requests/user";
   import services from "./service/services";
+  import debug_interface from "./debug/debug_interface";
 
   export default {
     name: 'index',
     props:['tab'],//url中传进来的参数
-    components: {services},
+    components: {services,debug_interface},
     data() {
       return {
         current_user: {},
