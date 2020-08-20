@@ -37,6 +37,7 @@
     <div class="index-context">
       <services v-if="tab === '1'"></services>
       <debug_interface v-if="tab === '4'"></debug_interface>
+      <task_list v-if="tab === '2'"></task_list>
     </div>
   </div>
 </template>
@@ -45,11 +46,12 @@
   import {get_user} from "../requests/user";
   import services from "./service/services";
   import debug_interface from "./debug/debug_interface";
+ import task_list from "./task/task_list";
 
   export default {
     name: 'index',
     props:['tab'],//url中传进来的参数
-    components: {services,debug_interface},
+    components: {services,debug_interface,task_list},
     data() {
       return {
         current_user: {},

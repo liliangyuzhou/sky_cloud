@@ -1,7 +1,7 @@
 <template>
 
   <div>
-    <el-button type="primary" @click="open_add_interface">创建接口</el-button>
+    <el-button type="primary" @click="open_add_interface" size="small">创建接口</el-button>
 <!--    因为要分页，所以不能直接赋值父组件传进来的数据interfaces，需要在计算属性里面计算下，返回计算后的interfaces数据-->
     <!--      :data="interfaces"-->
     <el-table
@@ -56,7 +56,7 @@
         :page-size="page.page_size"
         :current_apge="page.current" @current-change="current_change"
         background
-        layout="prev, pager, next"
+        layout="total,prev, pager, next"
         :total="page.total">
       </el-pagination>
     </div>
