@@ -26,3 +26,19 @@ export const get_task=function (task_id) {
   return common_get(task_path + task_id)
 }
 
+
+//获取单个任务的接口列表
+export const get_task_interface=function (task_id) {
+  return common_get(task_path + task_id+"/interface/")
+}
+//任务添加接口
+export const  task_add_interface=function (task_id,data) {
+  return common_post(task_path+task_id+"/interface/", data)
+}
+
+//任务移除接口
+export const task_delete_interface=function (task_id) {
+  return common_delete(task_path+task_id+"/interface/")
+}
+
+
