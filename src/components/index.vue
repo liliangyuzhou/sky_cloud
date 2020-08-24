@@ -38,6 +38,7 @@
       <services v-if="tab === '1'"></services>
       <debug_interface v-if="tab === '4'"></debug_interface>
       <task_list v-if="tab === '2'"></task_list>
+      <mock_list v-if="tab === '3'"></mock_list>
     </div>
   </div>
 </template>
@@ -46,12 +47,13 @@
   import {get_user} from "../requests/user";
   import services from "./service/services";
   import debug_interface from "./debug/debug_interface";
- import task_list from "./task/task_list";
+  import task_list from "./task/task_list";
+  import mock_list from "./mock/mock_list"
 
   export default {
     name: 'index',
     props:['tab'],//url中传进来的参数
-    components: {services,debug_interface,task_list},
+    components: {services,debug_interface,task_list,mock_list},
     data() {
       return {
         current_user: {},
