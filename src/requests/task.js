@@ -37,8 +37,17 @@ export const  task_add_interface=function (task_id,data) {
 }
 
 //任务移除接口
-export const task_delete_interface=function (task_id) {
-  return common_delete(task_path+task_id+"/interface/")
+export const task_delete_interface=function (task_id,data) {
+  return common_delete(task_path+task_id+"/interface/",data)
 }
 
+//任务版本列表获取接口
+export const task_get_versions=function (task_id) {
+  return common_get(task_path +task_id+ "/versions")
+}
+
+//任务单个版本的结果列表获取接口
+export const task_get_version_result=function (version_id) {
+  return common_get(task_path + "versions/"+version_id+"/results")
+}
 

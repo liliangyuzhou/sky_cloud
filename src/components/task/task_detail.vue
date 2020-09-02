@@ -57,7 +57,7 @@
             label="名称"
             width="150">
             <template slot-scope="scope">
-              <a href="javascript:void(0)">{{ scope.row.name }}</a>
+              <a href="javascript:void(0)" @click="open_edit_task(scope.row)">{{ scope.row.name }}</a>
             </template>
           </el-table-column>
           <el-table-column
@@ -86,8 +86,7 @@
             width="220">
             <template slot-scope="scope">
               <el-button type="text" size="small">查看</el-button>
-              <el-button @click="open_edit_task(scope.row)" type="text" size="small">编辑</el-button>
-              <el-button type="text" size="small" @click="open_delete_task(scope.row.id)">删除</el-button>
+              <el-button type="text" size="small" @click="open_delete_task(scope.row.task_interface_id)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -103,7 +102,9 @@
           </el-pagination>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="结果列表" name="results">结果列表</el-tab-pane>
+      <el-tab-pane label="结果列表" name="results">
+        <task_result_list :task_id="task.id" v-if="activeName==='results'"></task_result_list>
+      </el-tab-pane>
     </el-tabs>
 
     <task_select_interfaces v-if="show_select_interface" @cancel="cancel_selelct_interface_dialog" @success="success_select_interface_dialog"></task_select_interfaces>
@@ -114,11 +115,12 @@
 <script>
   import {get_task_interface, task_add_interface, task_delete_interface} from "../../requests/task";
   import task_select_interfaces from "./task_select_interfaces"
+  import task_result_list from "./task_result_list"
 
   export default {
     name: "task_detail",
     props: ['task'],//任务的详细数据是由外面传递进来的：id，name，description等等
-    components:{task_select_interfaces},
+    components:{task_select_interfaces,task_result_list},
     data() {
       return {
         page: {
@@ -133,7 +135,19 @@
       }
     },
     methods: {
-      open_delete_task(){
+      open_edit_task(data){
+          window.open("/edit/interface?services="+data.service+'&interface='+data.id)
+      },
+      open_delete_task(id){
+        task_delete_interface(this.task.id,{task_interface_id:id}).then(data=>{
+          if(data.success===true){
+            this.$message.info("该任务下的接口移除成功！")
+            this.get_task_interface_list()
+          }else{
+            this.$message.error("该任务下的接口移除失败！")
+          }
+        })
+
 
       },
       success_select_interface_dialog(select_interfaces){

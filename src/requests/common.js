@@ -42,9 +42,11 @@ export let common_put=function (url,data) {
   })
 }
 
-export let common_delete=function (url) {
+export let common_delete=function (url,data={}) {
+  data=JSON.stringify(data)
   return fetch(host+url,{
     method:"DELETE",
+    body:data,
     credentials: 'include',
     headers:{
       'token':VueCookies.get('token')

@@ -88,7 +88,7 @@
 
       },
       open_edit_interface(id) {
-        window.open('/add/interface?service=' + this.service_id + "&interface=" + id)
+        window.open('/edit/interface?service=' + this.service_id + "&interface=" + id)
       },
       open_delete_interface(id) {
         this.$confirm('此操作将永久删除该接口, 是否继续?', '提示', {
