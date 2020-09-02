@@ -1,6 +1,6 @@
 <template>
 
-  <div class="dive-main">
+  <div class="div-main">
     <el-button type="primary" @click="open_add_mock" size="small">创建mock</el-button>
     <!--    因为要分页，所以不能直接赋值父组件传进来的数据mocks，需要在计算属性里面计算下，返回计算后的mocks数据-->
     <!--      :data="mocks"-->
@@ -281,7 +281,7 @@
     text-align: right;
   }
 
-  .dive-main {
+  .div-main {
     padding: 10px;
   }
 </style>
